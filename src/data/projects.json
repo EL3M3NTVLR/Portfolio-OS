@@ -1,0 +1,295 @@
+[
+  {
+    "id": "relayr",
+    "category": "UI/UX",
+    "tag": "UI/UX · AI",
+    "title": "Relayr",
+    "desc": "Relayr is an AI-augmented messaging app which can read your texts out loud and quantify aspects of the texts for set metrics.",
+    "meta": "Web App · Deployed 2026",
+    "btnText": "↗ Open Relayr",
+    "url": "https://relayr-azure.vercel.app",
+    "featured": true,
+    "cover": "/assets/02-projects/relayr/cover.webp"
+  },
+  {
+    "id": "herbtantra",
+    "category": "UI/UX",
+    "tag": "UI/UX · iOS · Figma Prototype",
+    "title": "HerbTantra",
+    "desc": "An app prototype for HerbTantra, brand dedicated to harnessing the power of Ayurveda and age-old Indian kitchen remedies to provide holistic solutions for people of all age groups.",
+    "meta": "iOS Prototype · Figma · 2024",
+    "btnText": "↗ View Prototype",
+    "url": "https://www.figma.com/proto/t5931rMZ8uq3U2FEU8vCWn/HerbTantra-iOS?page-id=483%3A1720&node-id=547-1116&starting-point-node-id=547%3A1116&scaling=scale-down&content-scaling=fixed&t=ZQOma4n0ukD8Ghqg-1",
+    "featured": true,
+    "cover": "/assets/02-projects/herbtantra/cover.webp"
+  },
+  {
+    "id": "moire",
+    "category": "Film",
+    "tag": "Short Film · Direction · Video",
+    "title": "Moiré",
+    "desc": "Every choice leaves a trace. But what happens when your own digital footprint starts hunting you? Can you ever truly delete your past, or do our traces always remain? Directed by Aritra Banerjee.",
+    "meta": "Short Film · 2026",
+    "btnText": "▶ Watch on YouTube",
+    "url": "https://youtu.be/RXE7CCLYXGg?si=dtcxnOfTF1l4xmbw",
+    "featured": false,
+    "cover": "/assets/02-projects/moire/cover.webp"
+  },
+  {
+    "id": "heartware",
+    "category": "Film",
+    "tag": "Documentary · Direction · Edit",
+    "title": "Heartware",
+    "desc": "A short documentary shot and edited as an academic project, Heartware explores the relationship between technology and modern dating and how dating has evolved to be. Shot and Edited by Aritra Banerjee.",
+    "meta": "Documentary · Academic Project · 2026",
+    "btnText": "▶ Watch on YouTube",
+    "url": "https://youtu.be/Rk8zTI0Rc60",
+    "featured": true,
+    "cover": "/assets/02-projects/heartware/cover.webp"
+  },
+  {
+    "id": "zerotwo",
+    "category": "Poster",
+    "tag": "Poster Design · Illustration",
+    "title": "Zero Two",
+    "desc": "A fan-art poster for Zero Two from Darling in the FranXX, rendered in a dark, gritty editorial style. Bilingual typographic layout combining English and Japanese, with a duotone red-on-dark palette and texture overlays.",
+    "meta": "Personal Project · Photoshop",
+    "btnText": null,
+    "url": null,
+    "featured": false,
+    "cover": "/assets/02-projects/zerotwo/cover.webp"
+  },
+  {
+    "id": "nissan370z",
+    "category": "Poster",
+    "tag": "Poster Design · Typography",
+    "title": "Nissan 370Z",
+    "desc": "A technical spec-sheet poster for the Nissan 370Z in the acid-green brutalist style. Inspired by streetwear graphics and Japanese car culture — dense layout, distressed halftone photography, and bold billboard typography.",
+    "meta": "Personal Project · Photoshop",
+    "btnText": null,
+    "url": null,
+    "featured": false,
+    "cover": "/assets/02-projects/nissan370z/cover.webp"
+  },
+  {
+    "id": "byomkesh",
+    "category": "Poster",
+    "tag": "Poster Design · Bengali Typography",
+    "title": "Byomkesh Bakshi",
+    "desc": "A noir poster for the iconic Bengali detective Byomkesh Bakshi. Black-and-white silhouette composition, dramatic street-light beam, and torn-paper collage elements. Bengali title typography hand-selected for authenticity.",
+    "meta": "Personal Project · Photoshop",
+    "btnText": null,
+    "url": null,
+    "featured": false,
+    "cover": "/assets/02-projects/byomkesh/cover.webp"
+  },
+  {
+    "id": "wheeloflife",
+    "category": "Film",
+    "tag": "Direction · Editing · Personal",
+    "title": "The Wheel of Life",
+    "desc": "A personal short video project exploring cyclical themes — time, repetition, and the rhythms that define our daily lives. Directed and edited entirely by Aritra Banerjee.",
+    "meta": "Personal Project · 2024",
+    "btnText": "▶ Watch on YouTube",
+    "url": "https://youtu.be/mG_hhUn0dWI",
+    "featured": false,
+    "cover": "/assets/02-projects/wheeloflife/cover.webp"
+  },
+  {
+    "id": "kiwislices",
+    "category": "Commercial",
+    "tag": "Production · Internship",
+    "title": "Kiwi Slices",
+    "desc": "How expensive is Bengaluru, really? A youtube video produced during an internship, investigating the real cost of living in one of India's fastest-growing cities. Ideated, produced, and assisted shooting.",
+    "meta": "Internship Project · 2025",
+    "btnText": "▶ Watch on YouTube",
+    "url": "https://youtu.be/bWTlYq7gXqQ?si=9mscJDyq59KVH73T",
+    "featured": false,
+    "cover": "/assets/02-projects/kiwislices/cover.webp"
+  },
+  {
+    "id": "barbie",
+    "category": "Commercial",
+    "tag": "Commercial · Academic · Miniature",
+    "title": "Barbie's Dreamhouse",
+    "desc": "A miniature commercial for Barbie's Dreamhouse, produced as an academic project. Conceptualised, shot, and edited by Aritra Banerjee — combining practical miniature photography with a playful commercial aesthetic.",
+    "meta": "Academic Project · 2025",
+    "btnText": "▶ Watch on YouTube",
+    "url": "https://youtu.be/9q0rounPPjU",
+    "featured": false,
+    "cover": "/assets/02-projects/barbie/cover.webp"
+  },
+  {
+    "id": "darjeeling",
+    "category": "Reel",
+    "tag": "Travel · Reel · Personal",
+    "title": "Darjeeling Diaries",
+    "desc": "A short reel capturing the moments of my first trip with friends, ever. My first attempt at colour grading. Shot and edited entirely by Aritra Banerjee.",
+    "meta": "Personal Project · 2024",
+    "btnText": "▶ Watch",
+    "url": "https://drive.google.com/file/d/1tI2T3lrsuUlvr56eqJCmagVf4MMZNMUH/view?usp=drive_link",
+    "featured": false,
+    "cover": "/assets/02-projects/darjeeling/cover.webp"
+  },
+  {
+    "id": "gangtok",
+    "category": "Reel",
+    "tag": "Travel · Reel · Personal",
+    "title": "Gangtok Diaries",
+    "desc": "A travel reel capturing moments from my friend's trip to Gangtok, Sikkim. Shot and edited by Aritra Banerjee as a personal documentation of the journey.",
+    "meta": "Personal Project · 2025",
+    "btnText": "▶ Watch",
+    "url": "https://drive.google.com/file/d/1tJSfKVMry8MRG-3tUfnKoyqjK8Nk7lmH/view?usp=drive_link",
+    "featured": false,
+    "cover": "/assets/02-projects/gangtok/cover.webp"
+  },
+  {
+    "id": "artofnoticing",
+    "category": "Film",
+    "tag": "Documentary · Reel · Academic",
+    "title": "The Art of Noticing",
+    "desc": "An observational short reel exploring the small, overlooked details of everyday life — the textures, sounds, and moments that pass by unacknowledged. Shot and edited by Aritra Banerjee for an academic brief.",
+    "meta": "Academic Project · 2025",
+    "btnText": "▶ Watch",
+    "url": "https://drive.google.com/file/d/1YNpiCAmkS39nsdhJm5o4FAhIuX5CVKoI/view?usp=drive_link",
+    "featured": false,
+    "cover": "/assets/02-projects/artofnoticing/cover.webp"
+  },
+  {
+    "id": "fooddelivery",
+    "category": "Reel",
+    "tag": "Reel · Internship · Production",
+    "title": "Food Delivery Expenses",
+    "desc": "A punchy, data-driven reel examining how much people actually spend on food delivery apps. Ideated and produced during an internship — concept, shoot assist, and production.",
+    "meta": "Internship Project · 2025",
+    "btnText": "▶ Watch on Instagram",
+    "url": "https://www.instagram.com/reel/DBLiErQvT-d/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    "featured": false,
+    "cover": "/assets/02-projects/fooddelivery/cover.webp"
+  },
+  {
+    "id": "astrology",
+    "category": "Reel",
+    "tag": "Reel · Internship · Starring",
+    "title": "Astrology",
+    "desc": "A humorous, opinionated reel on astrology — ideated, produced, shot, and starred in by Aritra Banerjee during an internship. Combines deadpan delivery with tight editing for maximum comedic effect.",
+    "meta": "Internship Project · 2025",
+    "btnText": "▶ Watch on Instagram",
+    "url": "https://www.instagram.com/reel/DB8iCr2JZYT/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    "featured": false,
+    "cover": "/assets/02-projects/astrology/cover.webp"
+  },
+  {
+    "id": "scapegoat",
+    "category": "Audio",
+    "tag": "Audio Drama · Direction · Performance",
+    "title": "Scapegoat",
+    "desc": "An original audio drama written and directed by Aritra Banerjee. Starring as Denver Frost, the story unfolds through layered sound design and tightly scripted dialogue. Produced as an academic project.",
+    "meta": "Academic Project · Written & Directed by Aritra Banerjee · 2024",
+    "btnText": "▶ Listen",
+    "url": "https://drive.google.com/file/d/1o_o_XUMUTi1tOZ0M5exsQcd0xTGD1EQE/view?usp=drive_link",
+    "featured": false,
+    "cover": "/assets/02-projects/scapegoat/cover.webp"
+  },
+  {
+    "id": "aschebochor",
+    "category": "Audio",
+    "tag": "Narration · Writing · Academic",
+    "title": "Asche Bochor Abar Hobe",
+    "desc": "A narrative audio piece written, narrated, and edited entirely by Aritra Banerjee, this is an attempt to express the emotions of each day of Durga Pujo through its distinct emotional soundscape.",
+    "meta": "Academic Project · Written & Narrated by Aritra Banerjee · 2025",
+    "btnText": "▶ Listen",
+    "url": "https://drive.google.com/file/d/10rG60VfL_X98nhrWJXQDd7S8BI9p1-Zp/view?usp=drive_link",
+    "featured": false,
+    "cover": "/assets/02-projects/aschebochor/cover.webp"
+  },
+  {
+    "id": "mysticmusings",
+    "category": "Audio",
+    "tag": "Podcast · Performance · Academic",
+    "title": "Mystic Musings",
+    "desc": "An audio project about the depictions of mystical beings in pop culture. Starred in, Recorded, and Edited by Aritra Banerjee.",
+    "meta": "Academic Project · 2025",
+    "btnText": "▶ Listen",
+    "url": "https://drive.google.com/file/d/1OTqxpuDLGRIZup8a6t0tquCe_A12PCKA/view?usp=drive_link",
+    "featured": false,
+    "cover": "/assets/02-projects/mysticmusings/cover.webp"
+  },
+  {
+    "id": "museum-of-a-normal-person",
+    "category": "Documentary Series",
+    "featured": true,
+    "tag": "Documentary Series · Cinematography · Colour",
+    "title": "Museum of a Normal Person",
+    "desc": "A 3-part mini-docu series about the lives and views of people attached to the craft of sourcing, curating and restoring trinkets, antiques and furniture, with an added academic angle. Cinematography and colour grading by Aritra Banerjee.",
+    "meta": "3 episodes",
+    "btnText": "▶ Watch on YouTube",
+    "url": null,
+    "episodes": [
+      {
+        "label": "EP1",
+        "url": "https://youtu.be/dzIodzUOJjw"
+      },
+      {
+        "label": "EP2",
+        "url": "https://youtu.be/j1Iw5m5Ztf0"
+      },
+      {
+        "label": "EP3",
+        "url": "https://youtu.be/oopxkjOC5tw"
+      }
+    ],
+    "cover": "/assets/02-projects/museum-of-a-normal-person/cover.webp"
+  },
+  {
+    "id": "mirage",
+    "category": "Music Video",
+    "featured": true,
+    "tag": "Music Video · Direction · Vocals",
+    "title": "Mirage",
+    "desc": "A music video based on SDG 6: Clean Water and Sanitation. Directed by Aritra Banerjee, who also sings and stars in it.",
+    "meta": "Music Video",
+    "btnText": "▶ Watch on YouTube",
+    "url": "https://youtu.be/CX_G0lGilr8",
+    "cover": "/assets/02-projects/mirage/cover.webp",
+    "credits": "Director: Aritra Banerjee. Also vocals and starring. A Group 1 Production."
+  },
+  {
+    "id": "watched-magazine",
+    "category": "Design",
+    "featured": false,
+    "tag": "Magazine · Editorial Design",
+    "title": "Watched",
+    "desc": "A magazine about how surveillance capitalism is affecting our lives. Designed by Aritra Banerjee.",
+    "meta": "Magazine, August 2026",
+    "btnText": "↗ Read",
+    "url": "https://drive.google.com/file/d/1VLns1GCBYaolgD5nYN2iIOyjviKYksVN/view?usp=sharing",
+    "cover": "/assets/02-projects/watched/cover.webp"
+  },
+  {
+    "id": "legaloid",
+    "category": "UI/UX",
+    "featured": true,
+    "tag": "Design Thinking · Product Concept",
+    "title": "Legaloid",
+    "desc": "A guided legal-assistance platform concept for first-time legal seekers in India. Idea and pitch by Aritra Banerjee, developed with a group in a Design Thinking course.",
+    "meta": "Design Thinking and Innovation, Sept 2026 (group project)",
+    "btnText": "View Presentation",
+    "url": "https://drive.google.com/file/d/1K6JgaScD9_3Z94UYPchjR6P9BVKNNUcP/view?usp=sharing",
+    "cover": "/assets/02-projects/legaloid/cover.webp",
+    "links": [
+      {
+        "label": "View Presentation",
+        "url": "https://drive.google.com/file/d/1K6JgaScD9_3Z94UYPchjR6P9BVKNNUcP/view?usp=sharing"
+      },
+      {
+        "label": "View Prototype",
+        "url": "https://www.figma.com/proto/SNXjOaTkMlTHeXxq9cmWr1/Legaloid?page-id=2015%3A67&node-id=2015-1364&viewport=-27%2C265%2C0.1&t=nDnhFcKyJD5Og56E-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2015%3A1364&show-proto-sidebar=1"
+      },
+      {
+        "label": "Read Research",
+        "url": "https://docs.google.com/document/d/1_23R61DUclE_ZR0qWc0bQ8UGtwluF_dquXFmwkNsaJE/edit?usp=sharing"
+      }
+    ]
+  }
+]

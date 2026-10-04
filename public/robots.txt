@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aritrabjee.vercel.app/sitemap.xml
