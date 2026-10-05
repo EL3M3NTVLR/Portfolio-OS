@@ -26,6 +26,7 @@ const QUOTES = [
   'Rest is part of the edit.', 'Ask the person, then design.', 'Look twice at ordinary things.', 'Finish the small version today.',
 ]
 const LAYOUT = 'aritraos-layout-v1'
+const FEATURED = ['portfolio', 'cases', 'contact']
 
 function useClock() {
   const f = () => new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', hour12: true })
@@ -44,7 +45,7 @@ function Boot({ done }) {
   return (
     <div className="boot" role="status">
       <div>
-        <img src="/assets/01-portraits/primary-portrait-cafe.webp" alt="" />
+        <img src={P.identity.primaryPortrait} alt="" />
         <h1>AritraOS</h1>
         <p>Loading projects, case files, films and journey · v1.0</p>
         <div className="bar-prog"><i style={{ '--d': `${d}s` }} /></div>
@@ -65,7 +66,7 @@ function Win({ w, app, active, focus, close, min, max, move, open }) {
   })
   return (
     <section ref={ref} tabIndex={-1} role="dialog" aria-label={app.title} className={`win ${w.max ? 'max' : ''} ${w.min ? 'hide' : ''}`}
-      style={{ left: w.x, top: w.y, width: app.size[0], height: app.size[1], maxWidth: '100vw', maxHeight: 'calc(100dvh - 140px)', zIndex: w.z }}
+      style={{ left: w.x, top: w.y, width: app.size[0], height: app.size[1], maxWidth: '100vw', maxHeight: 'calc(100dvh - 196px)', zIndex: w.z }}
       onPointerDown={() => focus(w.id)}>
       <header className="wh" onPointerDown={(e) => { if (!e.target.closest('button')) start(e) }} onDoubleClick={() => max(w.id)}>
         <h2>{app.title}</h2>
@@ -80,7 +81,7 @@ function Win({ w, app, active, focus, close, min, max, move, open }) {
   )
 }
 
-function Tile({ app, isOpen, open, off, setOff, canMove }) {
+function Tile({ app, isOpen, open, off, setOff, canMove, wide }) {
   const sup = useRef(false)
   const start = useDrag({
     threshold: 6,
@@ -93,7 +94,7 @@ function Tile({ app, isOpen, open, off, setOff, canMove }) {
     onEnd: (moved, o) => { o.el.classList.remove('dragging'); if (moved && canMove) { sup.current = true; setTimeout(() => (sup.current = false), 0) } },
   })
   return (
-    <button className="tile" style={{ transform: `translate(${off.x}px,${off.y}px)` }} onPointerDown={canMove ? start : undefined}
+    <button className={`tile ${wide ? 'wide' : ''}`} style={{ transform: `translate(${off.x}px,${off.y}px)` }} onPointerDown={canMove ? start : undefined}
       onClick={() => { if (!sup.current) open(app.id) }} aria-label={`Open ${app.title}. ${app.desc}`}>
       <span className="glyph"><app.icon size={24} aria-hidden /></span>
       <span className="tt"><b>{app.title}</b><span>{app.desc}</span></span>
@@ -134,6 +135,7 @@ export default function App() {
   const [pal, setPal] = useState(false)
   const [lay, setLay] = useState(() => { const l = readLS(LAYOUT, {}); return l && typeof l === 'object' ? l : {} })
   const [evt, setEvt] = useState({ n: 0, type: '' })
+  const [more, setMore] = useState(false)
   const wide = useMedia('(min-width: 1181px)')
   const clock = useClock()
   const quote = QUOTES[Math.floor(Date.now() / 864e5) % QUOTES.length]
@@ -149,7 +151,7 @@ export default function App() {
       if (ex) return ws.map((w) => (w.id === id ? { ...w, z: nz, min: false, payload: payload ?? w.payload } : w))
       const k = ws.length
       const vw = window.innerWidth, vh = window.innerHeight
-      return [...ws, { id, z: nz, x: clamp((vw - app.size[0]) / 2 + k * 30 - 30, 8, vw - 120), y: clamp(70 + k * 28, 52, vh - 160), payload }]
+      return [...ws, { id, z: nz, x: clamp((vw - app.size[0]) / 2 + k * 30 - 30, 8, vw - 120), y: clamp(62 + k * 26, 52, vh - 260), payload }]
     })
     ping('open')
   }, [])
@@ -193,7 +195,7 @@ export default function App() {
       <div className="wall" aria-hidden><div className="glow" /><div className="wm">প্রদর্শনী</div><div className="grain" /><div className="strip" /></div>
 
       <header className="bar">
-        <div className="mark"><img src="/assets/01-portraits/primary-portrait-cafe.webp" alt="" /> AritraOS</div>
+        <div className="mark"><img src={P.identity.primaryPortrait} alt="" /> AritraOS</div>
         <nav aria-label="System">
           <button onClick={() => open('portfolio')}>Work</button>
           <button onClick={() => open('cases')}>Case Files</button>
@@ -214,35 +216,39 @@ export default function App() {
           <div className="eyebrow">{P.identity.roles.join(' · ')}</div>
           <h1><span>Aritra</span><span>Banerjee</span></h1>
           <p className="bn" lang="bn">Welcome to my প্রদর্শনী</p>
-          <p className="sub">{P.identity.subheadline}</p>
-          <p className="where">Kolkata, India · Studying Communications &amp; Media and Psychology at Christ University, Bengaluru</p>
+          <p className="sub">Design, film and colour, made with a refusal to ship anything that looks like everyone else's.</p>
           <div className="ctas">
             <button className="btn pri" onClick={() => open('portfolio')}>Enter the portfolio</button>
-            <a className="btn sec" href={`mailto:${P.contact.email}`}>Email me</a>
-            <a className="btn sec" href={P.identity.resumePdf} download>Résumé</a>
-          </div>
-          <div className="proof" aria-label="Highlights">
-            <span><b>{PROJECTS.length}</b>projects</span><span><b>5</b>case files</span><span><b>Meta</b>Social Media Marketing certificate, Sep 2026</span>
+            <button className="btn sec" onClick={() => open('about')}>About me</button>
           </div>
         </section>
 
         <section className="portrait" aria-label="Portrait">
-          <div className="arch"><img src={P.identity.primaryPortrait} alt="Aritra Banerjee smiling at a café counter" /></div>
-          <div className="plaque"><b>Frame 01</b> · Aritra Banerjee, Digital Creative</div>
+          <div className="arch"><img src={P.identity.primaryPortrait} alt="Aritra Banerjee smiling in front of a waterfall" /></div>
+          <div className="plaque"><b>Frame 01</b> · Aritra Banerjee, Digital Creative · Kolkata</div>
         </section>
 
         <div className="side">
-          <aside className="card tx" style={{ transform: `translate(${txOff.x}px,${txOff.y}px)` }} onPointerDown={wide ? txDrag : undefined} aria-label="Daily transmission">
-            <small><span>Daily transmission</span><span>{clock.split(',')[0]}</span></small>
-            <p>{quote}</p>
-            <button onPointerDown={(e) => e.stopPropagation()} onClick={() => open('board', { focus: Date.now() })}>Add a quick sticky</button>
-          </aside>
           <nav className="apps apps-wrap" aria-label="Applications">
-            {APPS.map((a) => (
-              <Tile key={a.id} app={a} isOpen={wins.some((w) => w.id === a.id)} open={open} canMove={wide}
-                off={lay[a.id] || { x: 0, y: 0 }} setOff={(o) => setLay((l) => ({ ...l, [a.id]: o }))} />
+            {APPS.filter((x) => FEATURED.includes(x.id)).map((x) => (
+              <Tile key={x.id} app={x} wide={x.id === 'portfolio'} isOpen={wins.some((w) => w.id === x.id)} open={open} canMove={wide}
+                off={lay[x.id] || { x: 0, y: 0 }} setOff={(o) => setLay((l) => ({ ...l, [x.id]: o }))} />
+            ))}
+            {more && APPS.filter((x) => !FEATURED.includes(x.id)).map((x) => (
+              <Tile key={x.id} app={x} isOpen={wins.some((w) => w.id === x.id)} open={open} canMove={wide}
+                off={lay[x.id] || { x: 0, y: 0 }} setOff={(o) => setLay((l) => ({ ...l, [x.id]: o }))} />
             ))}
           </nav>
+          {more && (
+            <aside className="card tx" style={{ transform: `translate(${txOff.x}px,${txOff.y}px)` }} onPointerDown={wide ? txDrag : undefined} aria-label="Daily transmission">
+              <small><span>Daily transmission</span><span>{clock.split(',')[0]}</span></small>
+              <p>{quote}</p>
+              <button onPointerDown={(e) => e.stopPropagation()} onClick={() => open('board', { focus: Date.now() })}>Add a quick sticky</button>
+            </aside>
+          )}
+          <button className="more" aria-expanded={more} onClick={() => setMore((m) => !m)}>
+            {more ? 'Aste aste, tuck it away' : `Aro dekho · ${APPS.length - FEATURED.length} more on the desk`}
+          </button>
         </div>
       </main>
 

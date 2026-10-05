@@ -22,7 +22,7 @@
 *{box-sizing:border-box;margin:0}
 html,body,#root{height:100%}
 body{font-family:var(--f-ui);font-size:16px;line-height:1.55;color:var(--ink);background:#111;-webkit-font-smoothing:antialiased;overflow:hidden}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
 img{max-width:100%}
@@ -36,7 +36,7 @@ img{max-width:100%}
 /* system bar */
 .bar{position:fixed;z-index:4500;top:0;left:0;right:0;height:var(--bar-h);padding:0 14px;display:flex;align-items:center;gap:14px;background:var(--bar);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);font-size:14px;font-weight:500}
 .bar .mark{display:flex;align-items:center;gap:10px;font:700 17px var(--f-display);letter-spacing:.01em}
-.bar .mark img,.mark-dot{width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2px solid var(--accent)}
+.bar .mark img,.mark-dot{width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:50% 36%;border:2px solid var(--accent)}
 .bar nav{display:flex;gap:2px}
 .bar nav button,.bar .ib{padding:6px 12px;border-radius:var(--r);min-height:36px;display:inline-flex;align-items:center;gap:6px}
 .bar nav button:hover,.bar .ib:hover{background:var(--chip)}
@@ -50,7 +50,7 @@ img{max-width:100%}
 kbd{font:600 12px var(--f-ui);border:1px solid var(--line);border-radius:4px;padding:1px 6px;background:var(--chip)}
 
 /* desktop */
-.desk{position:absolute;inset:0;z-index:1;padding:calc(var(--bar-h) + 28px) 32px calc(var(--dock-h) + 10px);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(220px,.62fr) minmax(0,1.05fr);gap:28px;align-items:center;overflow:hidden}
+.desk{position:absolute;inset:0;z-index:1;padding:calc(var(--bar-h) + 28px) 32px calc(var(--dock-h) + 10px);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.78fr) minmax(0,.86fr);gap:36px;align-items:center;overflow:hidden}
 .ident .eyebrow{font:600 13px var(--f-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
 .ident h1{font:800 clamp(46px,6.4vw,104px)/.92 var(--f-display);letter-spacing:-.03em}
 .ident h1 span{display:block}
@@ -67,10 +67,15 @@ kbd{font:600 12px var(--f-ui);border:1px solid var(--line);border-radius:4px;pad
 .proof b{font:700 20px var(--f-display);color:var(--ink);margin-right:6px}
 .portrait{position:relative;justify-self:center;width:100%;max-width:340px}
 .arch{aspect-ratio:3/4.1;border-radius:999px 999px 10px 10px;overflow:hidden;border:3px solid var(--ink);box-shadow:10px 10px 0 var(--accent);background:var(--panel)}
-.arch img{width:100%;height:100%;object-fit:cover;object-position:50% 28%;display:block}
+.arch img{width:100%;height:100%;object-fit:cover;object-position:50% 34%;display:block}
 .plaque{margin-top:22px;padding:8px 12px;border:1px solid var(--line);background:var(--panel);border-radius:var(--r);font-size:13px;text-align:center;color:var(--ink2)}
 .plaque b{color:var(--ink)}
-.side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.side{display:flex;flex-direction:column;gap:14px;min-width:0;max-height:calc(100dvh - var(--bar-h) - var(--dock-h) - 56px);overflow-y:auto;padding:4px 10px 8px 4px;margin:-4px -10px -8px -4px}
+.tile.wide{grid-column:span 2}
+.more{align-self:flex-start;min-height:44px;padding:0 4px;font:600 15px var(--f-ui);color:var(--ink2);text-decoration:underline;text-underline-offset:4px}
+.more:hover{color:var(--accent)}
+.apps .tile,.tx{animation:rise .35s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(10px)}
 .tx{padding:14px 16px;cursor:grab;touch-action:none}
 .tx small{display:flex;justify-content:space-between;font:600 12px var(--f-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
@@ -103,7 +108,7 @@ kbd{font:600 12px var(--f-ui);border:1px solid var(--line);border-radius:4px;pad
 .wh{display:flex;align-items:center;gap:10px;padding:0 10px;height:42px;flex:none;background:var(--accent);color:var(--on-accent);cursor:grab;touch-action:none;user-select:none}
 .wh h2{font:700 15px var(--f-display);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wc{display:flex;gap:8px}
-.wc button{width:22px;height:22px;border-radius:50%;border:2px solid var(--on-accent);display:grid;place-items:center;color:var(--on-accent)}
+.wc button{width:24px;height:24px;border-radius:50%;border:2px solid var(--on-accent);display:flex;align-items:center;justify-content:center;padding:0;line-height:0;color:var(--on-accent)}.wc svg{display:block;flex:none}
 .wc button:hover{background:var(--on-accent);color:var(--accent)}
 .wb{flex:1;overflow:auto;padding:20px;min-height:0;overscroll-behavior:contain}
 .wb h3{font:700 22px var(--f-display);margin-bottom:6px}
@@ -186,7 +191,7 @@ kbd{font:600 12px var(--f-ui);border:1px solid var(--line);border-radius:4px;pad
 
 /* boot */
 .boot{position:fixed;inset:0;z-index:9000;display:grid;place-items:center;background:#15100c;color:#F6EBDB;text-align:center;padding:20px}
-.boot img{width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:3px solid #F2C94C;margin-bottom:18px}
+.boot img{width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 36%;border:3px solid #F2C94C;margin-bottom:18px}
 .boot h1{font:800 34px var(--f-display)}
 .boot p{color:#CDBFAE;margin:6px 0 18px;font-size:15px}
 .bar-prog{width:min(300px,70vw);height:6px;border-radius:3px;background:#3a2e24;margin:0 auto 20px;overflow:hidden}
@@ -197,11 +202,12 @@ kbd{font:600 12px var(--f-ui);border:1px solid var(--line);border-radius:4px;pad
 /* companion */
 .comp{position:fixed;z-index:900;width:104px;touch-action:none;user-select:none;cursor:grab}
 .comp.drag{cursor:grabbing}
-.comp .sp{position:relative;width:104px;height:120px;display:grid;place-items:end center}
+.comp .sp{position:relative;width:104px;height:124px;display:grid;place-items:end center}
 .comp img.art{max-width:100%;max-height:100%;display:block;filter:drop-shadow(0 6px 6px rgba(0,0,0,.3));animation:bob 3.2s ease-in-out infinite}
 .comp img.fb{width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:3px solid var(--accent);background:var(--win)}
 .comp .say{position:absolute;bottom:100%;left:0;width:210px;margin-bottom:6px;padding:8px 12px;background:var(--win);color:var(--ink);border:2px solid var(--ink);border-radius:10px 10px 10px 2px;font-size:14px;line-height:1.35}
-.comp .lbl{display:flex;gap:4px;justify-content:center;margin-top:2px}
+.comp .lbl{position:absolute;top:-6px;right:-8px;opacity:0;transition:opacity .2s}
+.comp:hover .lbl,.comp:focus-within .lbl{opacity:1}
 .comp .lbl button{font-size:12px;font-weight:600;padding:2px 8px;min-height:26px;border-radius:999px;background:var(--panel);border:1px solid var(--line)}
 .comp[data-state=sleeping] img.art{animation:none;opacity:.9}
 @keyframes bob{50%{transform:translateY(-5px)}}
@@ -209,26 +215,22 @@ kbd{font:600 12px var(--f-ui);border:1px solid var(--line);border-radius:4px;pad
 /* tablet + phone */
 @media (max-width:1180px){
   body{overflow:auto}
-  .desk{position:absolute;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;gap:20px;padding:calc(var(--bar-h) + 18px) 20px calc(var(--dock-h) + 24px)}
-  .side{display:contents}.tx{order:1}.ident{order:2}.apps-wrap{order:3}.portrait{order:4;max-width:300px}
-  .tx{transform:none!important}.tile{transform:none!important}
-  .apps{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .tile{flex-direction:column;text-align:center;justify-content:flex-start;padding:14px 8px;min-height:140px}
-  .tile em{display:none}
+  .desk{position:absolute;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;gap:22px;padding:calc(var(--bar-h) + 22px) 20px calc(var(--dock-h) + 30px)}
+  .ident{order:1}.portrait{order:2;max-width:260px}.side{order:3;max-height:none;overflow:visible;margin:0;padding:0}
+  .tx,.tile{transform:none!important}
   .wall .strip{display:none}
+  .dock{left:96px;right:8px;transform:none;max-width:none;justify-content:flex-start;bottom:10px}
+  .dock .tip{display:none}
+  .comp{width:84px}
 }
 @media (max-width:767px){
   :root{--bar-h:52px}
   body{font-size:17px}
   .bar{padding:0 10px;gap:6px}
   .bar nav,.bar .seg,.bar .status,.bar kbd{display:none}
-  .apps{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .tile{flex-direction:row;text-align:left;min-height:84px;padding:10px}
-  .tile .tt span{font-size:14px}
-  .tile em{display:none}
   .ident h1{font-size:clamp(46px,15vw,70px)}
   .ident .sub{font-size:17px}
-  .tx p{font-size:20px}
+  .tile{min-height:80px}.tile .tt span{font-size:14px}
   .win,.win.max{inset:var(--bar-h) 6px calc(var(--dock-h) + 2px) 6px!important;width:auto!important;height:auto!important;left:6px!important;top:var(--bar-h)!important}
   .wb{padding:14px}
   .detail,.split,.about{grid-template-columns:1fr}
@@ -236,13 +238,13 @@ kbd{font:600 12px var(--f-ui);border:1px solid var(--line);border-radius:4px;pad
   .list{flex-direction:row;overflow-x:auto}
   .list button{flex:none;width:200px}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .dock{bottom:8px;justify-content:flex-start}
-  .dock .tip{display:none}
-  .comp{width:72px}.comp .sp{width:72px;height:84px}.comp img.fb{width:60px;height:60px}.comp img.art{max-height:84px}.comp .say{width:170px;font-size:13px}
-  .desk{padding-bottom:calc(var(--dock-h) + 90px)}
+  .comp{width:76px}.comp .sp{width:76px;height:90px}.comp img.art{max-height:90px}.comp img.fb{width:62px;height:62px}.comp .say{width:176px;font-size:13px;left:0}
+  .dock{left:88px}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 .sr-lg{display:inline}
 @media (max-width:1180px){.bar .sr-lg,.bar .status{display:none}}
 @media (max-width:1180px){.bar .seg{display:none}#tcycle{display:inline-flex!important}}
 @media (max-width:900px){.bar nav{display:none}}
+@media (max-width:767px){.tile em{display:none}}
+@media (max-width:1180px){.apps .tile:not(.wide) em{display:none}}

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { readLS, writeLS, clamp, useDrag, useMedia } from './lib.js'
 
-const KEY = 'aritraos-companion-v1'
-const W = 104, H = 140
+const KEY = 'aritraos-companion-v2'
+const W = 104, H = 124
 const LINES = {
   idle: ['Aaj na hoy kal korbo.', 'Ekta cha hole bhalo hoto.', 'Slow is also a style.', 'Dekho, kono taratari nei.'],
   happy: ['Bhalo laglo! Ektu ghure dekho.', 'Case files-ta pore dekho, worth it.', 'Chilling, but make it cinematic.'],
@@ -14,7 +14,7 @@ const LINES = {
   dragging: ['Oi oi, aste!'],
 }
 const pick = (s) => { const a = LINES[s] || LINES.idle; return a[Math.floor(Math.random() * a.length)] }
-const home = () => ({ x: 14, y: Math.max(70, window.innerHeight - H - 96) })
+const home = () => ({ x: 14, y: window.innerHeight - H - 14 })
 
 export default function Companion({ evt }) {
   const [pos, setPos] = useState(() => readLS(KEY, null) || home())
@@ -33,7 +33,7 @@ export default function Companion({ evt }) {
   }
   const wake = () => { clearTimeout(sleepT.current); sleepT.current = setTimeout(() => { setState('sleeping') }, 45000) }
 
-  useEffect(() => { wake(); return () => { clearTimeout(timer.current); clearTimeout(sleepT.current); clearTimeout(sayT.current) } }, [])
+  useEffect(() => { wake(); const hi = setTimeout(() => { setSay('Taratari nei. Dock-e sob ache, aste aste dekho.'); sayT.current = setTimeout(() => setSay(''), 5200) }, 4500); return () => { clearTimeout(timer.current); clearTimeout(sleepT.current); clearTimeout(sayT.current); clearTimeout(hi) } }, [])
   useEffect(() => {
     const f = () => setPos((p) => fix(p))
     window.addEventListener('resize', f); f()
@@ -53,7 +53,7 @@ export default function Companion({ evt }) {
     if (d && canDrag) { e.preventDefault(); setPos((p) => fix({ x: p.x + d[0], y: p.y + d[1] })) }
     else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); react('happy') }
   }
-  const style = canDrag ? { left: pos.x, top: pos.y } : { left: 8, bottom: 'calc(var(--dock-h) + 8px)' }
+  const style = canDrag ? { left: pos.x, top: pos.y } : { left: 6, bottom: 10 }
   const tried = failed[state] || 0
   const src = `/assets/03-companion/companion-${state}.${tried === 0 ? 'png' : 'webp'}`
 
@@ -70,9 +70,9 @@ export default function Companion({ evt }) {
             onError={() => setFailed((f) => ({ ...f, [state]: (f[state] || 0) + 1 }))} />
         )}
       </div>
-      <div className="lbl">
+      {canDrag && <div className="lbl">
         <button onClick={(e) => { e.stopPropagation(); setPos(home()); react('happy', 1500, false) }} onPointerDown={(e) => e.stopPropagation()} aria-label="Reset companion position">reset</button>
-      </div>
+      </div>}
     </div>
   )
 }
