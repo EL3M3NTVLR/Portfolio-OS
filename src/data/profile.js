@@ -20,11 +20,11 @@ export const ownerProfile = {
     positioning: "Digital Karigor from Kolkata who designs, edits and grades work that means something.",
     dailyMotivation: "Make It Mean Something",
     aboutDocName: "About.txt",
-    primaryPortrait: "/assets/01-portraits/alt-smile-waterfall.webp",
+    primaryPortrait: "/assets/01-portraits/alt-campus-sweater.webp",
     altPortraits: {
       cinematicWarm: "/assets/01-portraits/alt-cinematic-warm.webp",
       campusSweater: "/assets/01-portraits/alt-campus-sweater.webp",
-      smileWaterfall: "/assets/01-portraits/alt-smile-waterfall.webp",
+      smileWaterfall: "/assets/01-portraits/alt-campus-sweater.webp",
       avatarRefJacketGlance: "/assets/01-portraits/avatar-ref-jacket-glance.webp",
       avatarRefJacketSide: "/assets/01-portraits/avatar-ref-jacket-side.webp"
     },
