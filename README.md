@@ -19,4 +19,4 @@ npm run build      # builds to dist/ and runs the audit
 Import the repo in Vercel, framework Vite, build `npm run build`, output `dist`. Point `aritrabjee.vercel.app` at it.
 
 ## Storage
-Only in the visitor's browser: theme, icon positions, companion position, sticky notes. Nothing is sent anywhere. Contact uses `mailto:`.
+Only in the visitor's browser: theme, icon positions and companion position. Nothing is sent anywhere. Contact uses `mailto:`.
