@@ -1,8 +1,8 @@
-import { useMemo, useRef, useState, useEffect } from 'react'
-import { Play, Download, Mail, Linkedin, Copy, Trash2, X, ExternalLink, Plus, RotateCcw } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Play, Download, Mail, Linkedin, Copy, ExternalLink } from 'lucide-react'
 import { ownerProfile as P } from './data/profile.js'
 import projects from './data/projects.json'
-import { readLS, writeLS, ytId, clamp, useDrag } from './lib.js'
+import { ytId } from './lib.js'
 
 const FLAGS = P.flagships
 const FLAG_IDS = FLAGS.map((f) => f.id)
@@ -45,6 +45,7 @@ export function PortfolioApp({ payload, open }) {
             <div className="row">
               {isFlag && <button className="btn sm pri" onClick={() => open('cases', { id: p.id })}>Read the case file</button>}
               {p.url && <Ext href={p.url}>{p.btnText?.replace(/^[↗▶]\s*/, '') || 'Open project'}</Ext>}
+              {(p.episodes || []).map((e) => <Ext key={e.url} href={e.url}>{`Watch ${e.label} on YouTube`}</Ext>)}
             </div>
           </div>
         </div>
@@ -65,7 +66,7 @@ export function PortfolioApp({ payload, open }) {
           </button>
         ))}
       </div>
-      <p className="note">★ marks the five flagship case files. {projects.length} projects in the archive.</p>
+      <p className="note full">★ marks the five flagship case files. {projects.length} projects in the archive.</p>
     </div>
   )
 }
@@ -194,57 +195,6 @@ export function CraftApp() {
           <div className="step" key={o.title}><b>{o.title}</b><p>{o.desc}</p><p className="tag" style={{ gridColumn: 2 }}>{o.tags.join(' · ')}</p></div>
         ))}
       </div>
-    </div>
-  )
-}
-
-/* ---------- Whiteboard ---------- */
-const COLORS = ['#F2C94C', '#F4A58A', '#9AD9C9', '#C9B6F0']
-const KEY = 'aritraos-board-v1'
-export function BoardApp({ payload }) {
-  const [notes, setNotes] = useState(() => { const n = readLS(KEY, []); return Array.isArray(n) ? n : [] })
-  const [txt, setTxt] = useState('')
-  const [col, setCol] = useState(COLORS[0])
-  const area = useRef(null), inp = useRef(null)
-  useEffect(() => writeLS(KEY, notes), [notes])
-  useEffect(() => { if (payload?.focus) inp.current?.focus() }, [payload])
-  const add = () => {
-    const t = txt.trim().slice(0, 140)
-    if (!t) return
-    setNotes((n) => [...n, { id: Date.now(), t, c: col, x: 16 + (n.length % 5) * 28, y: 16 + (n.length % 5) * 28 }])
-    setTxt('')
-  }
-  const upd = (id, patch) => setNotes((n) => n.map((x) => (x.id === id ? { ...x, ...patch } : x)))
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 420 }}>
-      <div className="wbbar">
-        <input ref={inp} value={txt} maxLength={140} placeholder="Write a quick sticky (140 characters)" aria-label="Sticky note text"
-          onChange={(e) => setTxt(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && add()} />
-        {COLORS.map((c) => <button key={c} className="sw" style={{ background: c }} aria-pressed={col === c} aria-label={`Colour ${c}`} onClick={() => setCol(c)} />)}
-        <button className="btn sm pri" onClick={add}><Plus size={16} aria-hidden /> Add</button>
-        <button className="btn sm sec" onClick={() => setNotes([])}><RotateCcw size={16} aria-hidden /> Clear</button>
-      </div>
-      <div className="board" ref={area}>
-        {notes.map((n) => <Sticky key={n.id} n={n} area={area} upd={upd} del={() => setNotes((l) => l.filter((x) => x.id !== n.id))} />)}
-        {!notes.length && <p className="muted" style={{ padding: 20 }}>Empty board. Add a note above, then drag it by its top bar.</p>}
-      </div>
-      <p className="note">Notes are saved only in this browser. Nobody else, including me, receives them. To reach me, use Contact.</p>
-    </div>
-  )
-}
-function Sticky({ n, area, upd, del }) {
-  const start = useDrag({
-    onStart: () => ({ x: n.x, y: n.y }),
-    onMove: (dx, dy, o) => {
-      const r = area.current.getBoundingClientRect()
-      upd(n.id, { x: clamp(o.x + dx, 0, r.width - 176), y: clamp(o.y + dy, 0, r.height - 60) })
-    },
-  })
-  return (
-    <div className="sticky" style={{ left: n.x, top: n.y, background: n.c }}>
-      <header onPointerDown={start}><span style={{ fontSize: 12, fontWeight: 600 }}>drag</span>
-        <button onClick={del} aria-label="Delete note"><Trash2 size={16} /></button></header>
-      <textarea value={n.t} maxLength={140} aria-label="Edit note" onChange={(e) => upd(n.id, { t: e.target.value })} />
     </div>
   )
 }

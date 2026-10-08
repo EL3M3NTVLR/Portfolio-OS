@@ -1,24 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Type, LayoutGrid, FolderOpen, Clapperboard, FileText, Route, Sparkles, StickyNote, ScrollText, Mail, Search, Minus, Maximize2, X, Sun, Moon, Contrast } from 'lucide-react'
+import { LayoutGrid, FolderOpen, Clapperboard, FileText, Route, Sparkles, ScrollText, Mail, Search, Minus, Maximize2, X, Sun, Moon, Contrast } from 'lucide-react'
 import { ownerProfile as P } from './data/profile.js'
 import { readLS, writeLS, useLS, useMedia, clamp, fuzzy, useDrag } from './lib.js'
 import {
-  PortfolioApp, CasesApp, FilmsApp, AboutApp, JourneyApp, CraftApp, BoardApp, ResumeApp, ContactApp, PROJECTS, FLAGSHIPS,
+  PortfolioApp, CasesApp, FilmsApp, AboutApp, JourneyApp, CraftApp, ResumeApp, ContactApp, PROJECTS, FLAGSHIPS,
 } from './apps.jsx'
 import Companion from './Companion.jsx'
 
 const APPS = [
-  { id: 'portfolio', title: 'Portfolio', bn: 'কাজ', desc: 'All 22 projects, filterable', badge: 'Main drive', icon: LayoutGrid, C: PortfolioApp, size: [940, 640] },
-  { id: 'cases', title: 'Case Files', bn: 'নথিপত্র', desc: 'Five flagship deep dives', badge: 'Start here', icon: FolderOpen, C: CasesApp, size: [980, 650] },
-  { id: 'films', title: 'Film Vault', bn: 'ছবিঘর', desc: 'Watch the films, no autoplay', icon: Clapperboard, C: FilmsApp, size: [900, 620] },
-  { id: 'about', title: 'About.txt', bn: 'আমার কথা', desc: 'Who I am and how I think', icon: FileText, C: AboutApp, size: [820, 580] },
-  { id: 'journey', title: 'Journey', bn: 'পথচলা', desc: 'Kolkata 2004 to today', icon: Route, C: JourneyApp, size: [680, 620] },
-  { id: 'craft', title: 'Craft', bn: 'কারুকাজ', desc: 'My five-step method', icon: Sparkles, C: CraftApp, size: [740, 640] },
-  { id: 'board', title: 'Whiteboard', bn: 'দেয়াল লিখন', desc: 'Leave a sticky note', icon: StickyNote, C: BoardApp, size: [840, 580] },
-  { id: 'resume', title: 'Résumé', bn: 'জীবনপঞ্জি', desc: 'Preview or download PDF', icon: ScrollText, C: ResumeApp, size: [780, 660] },
-  { id: 'contact', title: 'Contact', bn: 'যোগাযোগ', desc: 'Email, LinkedIn, brief', badge: 'Hire me', icon: Mail, C: ContactApp, size: [660, 620] },
+  { id: 'portfolio', title: 'Portfolio', desc: 'All 22 projects, filterable', badge: 'Main drive', icon: LayoutGrid, C: PortfolioApp, size: [940, 640] },
+  { id: 'cases', title: 'Case Files', desc: 'Five flagship deep dives', badge: 'Start here', icon: FolderOpen, C: CasesApp, size: [980, 650] },
+  { id: 'films', title: 'Film Vault', desc: 'Watch the films, no autoplay', icon: Clapperboard, C: FilmsApp, size: [900, 620] },
+  { id: 'about', title: 'About.txt', desc: 'Who I am and how I think', icon: FileText, C: AboutApp, size: [820, 580] },
+  { id: 'journey', title: 'Journey', desc: 'Kolkata 2004 to today', icon: Route, C: JourneyApp, size: [680, 620] },
+  { id: 'craft', title: 'Craft', desc: 'My five-step method', icon: Sparkles, C: CraftApp, size: [740, 640] },
+  { id: 'resume', title: 'Résumé', desc: 'Preview or download PDF', icon: ScrollText, C: ResumeApp, size: [780, 660] },
+  { id: 'contact', title: 'Contact', desc: 'Email, LinkedIn, brief', badge: 'Hire me', icon: Mail, C: ContactApp, size: [660, 620] },
 ]
-const FONTS = [['print', 'Print editorial'], ['contemporary', 'Contemporary'], ['film', 'Film title'], ['suite', 'Editing suite']]
 const THEMES = [['day', 'Day', Sun], ['night', 'Night', Moon], ['dark', 'Dark', Contrast]]
 const QUOTES = [
   'Concepts before polish.', 'Let the shake be the style.', 'A made thing speaks louder than an application.',
@@ -37,7 +35,13 @@ function Alpona() {
   const r = (n, f) => Array.from({ length: n }, (_, i) => f(i, (360 / n) * i))
   return (
     <svg className="alpona" viewBox="-124 -124 248 248" aria-hidden>
-      <g fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+      <defs>
+        <mask id="archhole" maskUnits="userSpaceOnUse" x="-124" y="-124" width="248" height="248">
+          <rect x="-124" y="-124" width="248" height="248" fill="#fff" />
+          <path d="M-52,70 V-12 A52,52 0 0 1 52,-12 V70 Z" fill="#000" />
+        </mask>
+      </defs>
+      <g mask="url(#archhole)" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
         <circle r="7" /><circle r="11" strokeDasharray="0.1 4.2" strokeWidth="2.4" />
         {r(16, (i, d) => <path key={'p' + i} d={petal} transform={`rotate(${d})`} />)}
         {r(8, (i, d) => <path key={'b' + i} d={big} transform={`rotate(${d + 22.5})`} fill="currentColor" fillOpacity=".14" />)}
@@ -99,7 +103,7 @@ function Win({ w, app, active, focus, close, min, max, move, open }) {
       style={{ left: w.x, top: w.y, width: app.size[0], height: app.size[1], maxWidth: '100vw', maxHeight: 'calc(100dvh - 196px)', zIndex: w.z }}
       onPointerDown={() => focus(w.id)}>
       <header className="wh" onPointerDown={(e) => { if (!e.target.closest('button')) start(e) }} onDoubleClick={() => max(w.id)}>
-        <h2>{app.title} <span className="bnl" style={{ color: 'inherit', opacity: .85 }} lang="bn">· {app.bn}</span></h2>
+        <h2>{app.title}</h2>
         <div className="wc">
           <button onClick={() => min(w.id)} aria-label={`Minimise ${app.title}`}><Minus size={13} /></button>
           <button onClick={() => max(w.id)} aria-label={w.max ? 'Restore window' : 'Maximise window'}><Maximize2 size={12} /></button>
@@ -127,7 +131,7 @@ function Tile({ app, isOpen, open, off, setOff, canMove, wide }) {
     <button className={`tile ${wide ? 'wide' : ''}`} style={{ transform: `translate(${off.x}px,${off.y}px)` }} onPointerDown={canMove ? start : undefined}
       onClick={() => { if (!sup.current) open(app.id) }} aria-label={`Open ${app.title}. ${app.desc}`}>
       <span className="glyph"><app.icon size={24} aria-hidden /></span>
-      <span className="tt"><b>{app.title}<i className="bnl" lang="bn">{app.bn}</i></b><span>{app.desc}</span></span>
+      <span className="tt"><b>{app.title}</b><span>{app.desc}</span></span>
       {app.badge && <em>{app.badge}</em>}
       {isOpen && <i className="dot" aria-hidden />}
     </button>
@@ -160,7 +164,6 @@ function Palette({ items, close }) {
 export default function App() {
   const [booted, setBooted] = useState(false)
   const [theme, setTheme] = useLS('aritraos-theme-v1', 'day')
-  const [font, setFont] = useLS('aritraos-font-v1', 'print')
   const [wins, setWins] = useState([])
   const [z, setZ] = useState(1000)
   const [pal, setPal] = useState(false)
@@ -195,13 +198,10 @@ export default function App() {
 
   const cycleTheme = () => { const n = THEMES[(THEMES.findIndex((t) => t[0] === theme) + 1) % 3][0]; setTheme(n); ping('theme') }
   const resetLayout = () => setLay({})
-  const cycleFont = () => setFont((f) => FONTS[(FONTS.findIndex((x) => x[0] === f) + 1) % FONTS.length][0])
-  const fontName = (FONTS.find((x) => x[0] === font) || FONTS[0])[1]
   const items = useMemo(() => [
     ...APPS.map((a) => ({ label: a.title, type: 'App', run: () => open(a.id) })),
     ...FLAGSHIPS.map((f) => ({ label: f.title, type: 'Case file', run: () => open('cases', { id: f.id }) })),
     ...PROJECTS.map((p) => ({ label: p.title, type: 'Project', run: () => open('portfolio', { id: p.id }) })),
-    ...FONTS.map(([id, n]) => ({ label: `Font: ${n}`, type: 'Command', run: () => setFont(id) })),
     ...THEMES.map(([id, n]) => ({ label: `Switch to ${n} theme`, type: 'Command', run: () => setTheme(id) })),
     { label: 'Email Aritra', type: 'Command', run: () => { location.href = `mailto:${P.contact.email}` } },
     { label: 'Download résumé', type: 'Command', run: () => window.open(P.identity.resumePdf, '_blank', 'noopener') },
@@ -211,7 +211,7 @@ export default function App() {
   useEffect(() => {
     const k = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); setPal((p) => !p) }
-      else if (e.key === 'Escape' && !pal) setWins((ws) => { const vis = ws.filter((w) => !w.min); if (!vis.length) return ws; const top = vis.reduce((a, b) => (a.z > b.z ? a : b)); return ws.filter((w) => w.id !== top.id) })
+      else if (e.key === 'Escape' && !pal) setWins((ws) => { const vis = ws.filter((w) => !w.min); if (!vis.length) return ws; const top = vis.reduce((a, b) => (a.z > b.z ? a : b)); ping('close'); return ws.filter((w) => w.id !== top.id) })
     }
     window.addEventListener('keydown', k)
     return () => window.removeEventListener('keydown', k)
@@ -225,7 +225,7 @@ export default function App() {
   })
 
   return (
-    <div className="os" data-theme={theme} data-font={font}>
+    <div className="os" data-theme={theme}>
       <div className="wall" aria-hidden><div className="glow" /><div className="wm">প্রদর্শনী</div><div className="grain" /><div className="strip" /></div>
 
       <header className="bar">
@@ -241,7 +241,6 @@ export default function App() {
         <div className="seg" role="group" aria-label="Theme">
           {THEMES.map(([id, n]) => <button key={id} aria-pressed={theme === id} onClick={() => { setTheme(id); ping('theme') }}>{n}</button>)}
         </div>
-        <button className="ib fontbtn" onClick={cycleFont} aria-label={`Change font. Current: ${fontName}`}><Type size={16} aria-hidden /> <span className="sr-lg">{fontName}</span></button>
         <button className="ib" style={{ display: 'none' }} id="tcycle" onClick={cycleTheme} aria-label="Change theme"><Contrast size={18} /></button>
         <span className="clock">{clock}</span>
       </header>
@@ -259,8 +258,8 @@ export default function App() {
         </section>
 
         <section className="portrait" aria-label="Portrait">
-          <Alpona />
           <div className="archwrap">
+            <Alpona />
             <ArchRing />
             <div className="arch"><img src={P.identity.primaryPortrait} alt="Aritra Banerjee in a cream sweater, smiling, outdoors on campus" /></div>
           </div>
@@ -282,7 +281,6 @@ export default function App() {
             <aside className="card tx" style={{ transform: `translate(${txOff.x}px,${txOff.y}px)` }} onPointerDown={wide ? txDrag : undefined} aria-label="Daily transmission">
               <small><span lang="bn">আজকের বার্তা</span><span>{clock.split(',')[0]}</span></small>
               <p>{quote}</p>
-              <button onPointerDown={(e) => e.stopPropagation()} onClick={() => open('board', { focus: Date.now() })}>Add a quick sticky</button>
             </aside>
           )}
           <button className="more" aria-expanded={more} onClick={() => setMore((m) => !m)}>
