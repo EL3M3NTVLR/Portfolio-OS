@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { LayoutGrid, FolderOpen, Clapperboard, FileText, Route, Sparkles, ScrollText, Mail, Search, Minus, Maximize2, X, Sun, Moon, Contrast } from 'lucide-react'
+import { LayoutGrid, FolderOpen, Clapperboard, FileText, Route, Sparkles, ScrollText, Mail, Search, Minus, Maximize2, X, Moon, Contrast } from 'lucide-react'
 import { ownerProfile as P } from './data/profile.js'
 import { readLS, writeLS, useLS, useMedia, clamp, fuzzy, useDrag } from './lib.js'
 import {
@@ -17,7 +17,7 @@ const APPS = [
   { id: 'resume', title: 'Résumé', desc: 'Preview or download PDF', icon: ScrollText, C: ResumeApp, size: [780, 660] },
   { id: 'contact', title: 'Contact', desc: 'Email, LinkedIn, brief', badge: 'Hire me', icon: Mail, C: ContactApp, size: [660, 620] },
 ]
-const THEMES = [['day', 'Day', Sun], ['night', 'Night', Moon], ['dark', 'Dark', Contrast]]
+const THEMES = [['dusk', 'Dusk', Moon], ['darkroom', 'Darkroom', Contrast]]
 const QUOTES = [
   'Concepts before polish.', 'Let the shake be the style.', 'A made thing speaks louder than an application.',
   'Aim the work at the right problem first.', 'Warm tones, honest frames.', 'Test your own assumption before anyone else does.',
@@ -41,7 +41,7 @@ function Alpona() {
           <path d="M-52,70 V-12 A52,52 0 0 1 52,-12 V70 Z" fill="#000" />
         </mask>
       </defs>
-      <g mask="url(#archhole)" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+      <g mask="url(#archhole)"><g className="spin" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
         <circle r="7" /><circle r="11" strokeDasharray="0.1 4.2" strokeWidth="2.4" />
         {r(16, (i, d) => <path key={'p' + i} d={petal} transform={`rotate(${d})`} />)}
         {r(8, (i, d) => <path key={'b' + i} d={big} transform={`rotate(${d + 22.5})`} fill="currentColor" fillOpacity=".14" />)}
@@ -49,7 +49,7 @@ function Alpona() {
         {r(12, (i, d) => <path key={'d' + i} d={drop} transform={`rotate(${d})`} />)}
         {r(12, (i, d) => <circle key={'c' + i} r="2.2" cy="-100" transform={`rotate(${d + 15})`} fill="currentColor" stroke="none" />)}
         <circle r="121" strokeDasharray="0.1 4.8" strokeWidth="2.4" />
-      </g>
+      </g></g>
     </svg>
   )
 }
@@ -163,7 +163,8 @@ function Palette({ items, close }) {
 
 export default function App() {
   const [booted, setBooted] = useState(false)
-  const [theme, setTheme] = useLS('aritraos-theme-v1', 'day')
+  const [rawTheme, setTheme] = useLS('aritraos-theme-v1', 'dusk')
+  const theme = THEMES.some((t) => t[0] === rawTheme) ? rawTheme : rawTheme === 'dark' ? 'darkroom' : 'dusk'
   const [wins, setWins] = useState([])
   const [z, setZ] = useState(1000)
   const [pal, setPal] = useState(false)
@@ -196,7 +197,7 @@ export default function App() {
   const max = (id) => setWins((ws) => ws.map((w) => (w.id === id ? { ...w, max: !w.max } : w)))
   const move = (id, x, y) => patch(id, { x, y })
 
-  const cycleTheme = () => { const n = THEMES[(THEMES.findIndex((t) => t[0] === theme) + 1) % 3][0]; setTheme(n); ping('theme') }
+  const cycleTheme = () => { const n = THEMES[(THEMES.findIndex((t) => t[0] === theme) + 1) % THEMES.length][0]; setTheme(n); ping('theme') }
   const resetLayout = () => setLay({})
   const items = useMemo(() => [
     ...APPS.map((a) => ({ label: a.title, type: 'App', run: () => open(a.id) })),
