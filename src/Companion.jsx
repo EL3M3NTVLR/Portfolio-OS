@@ -72,7 +72,7 @@ export default function Companion({ evt }) {
   }
   const wake = () => { clearTimeout(sleepT.current); sleepT.current = setTimeout(() => { setState('sleeping') }, 45000) }
 
-  useEffect(() => { wake(); const hi = setTimeout(() => { setSay('Taratari nei. Dock-e sob ache, aste aste dekho.'); sayT.current = setTimeout(() => setSay(''), 5200) }, 4500); return () => { clearTimeout(timer.current); clearTimeout(sleepT.current); clearTimeout(sayT.current); clearTimeout(hi) } }, [])
+  useEffect(() => { wake(); const hi = setTimeout(() => { setSay(window.matchMedia('(max-width: 767px)').matches ? 'Taratari nei. Niche More-e sob ache, aste aste dekho.' : 'Taratari nei. Dock-e sob ache, aste aste dekho.'); sayT.current = setTimeout(() => setSay(''), 5200) }, 4500); return () => { clearTimeout(timer.current); clearTimeout(sleepT.current); clearTimeout(sayT.current); clearTimeout(hi) } }, [])
   useEffect(() => {
     const f = () => setPos((p) => fix(p))
     window.addEventListener('resize', f); f()
@@ -93,12 +93,12 @@ export default function Companion({ evt }) {
     if (d && canDrag) { e.preventDefault(); setPos((p) => fix({ x: p.x + d[0], y: p.y + d[1] })) }
     else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); react('happy') }
   }
-  const style = canDrag ? { left: pos.x, top: pos.y } : { left: 6, bottom: 10 }
+  const style = canDrag ? { left: pos.x, top: pos.y } : small ? { right: 6, bottom: 10 } : { left: 6, bottom: 10 }
   const cur = art[state]
   const scale = small ? 0.78 : 1
 
   return (
-    <div className={`comp ${state === 'dragging' ? 'drag' : ''}`} data-state={state} style={style}
+    <div className={`comp ${state === 'dragging' ? 'drag' : ''} ${small ? 'rt' : ''}`} data-state={state} style={style}
       onPointerDown={start} onPointerEnter={() => state === 'idle' && setState('alert')} onPointerLeave={() => state === 'alert' && setState('idle')}
       onKeyDown={key} tabIndex={0} role="button" aria-label="Lyadh, the lazy companion. Press Enter to say hi. Arrow keys move it.">
       {say && <div className="say" role="status">{say}</div>}

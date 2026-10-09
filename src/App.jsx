@@ -9,15 +9,15 @@ import Companion from './Companion.jsx'
 
 const APPS = [
   { id: 'portfolio', title: 'Portfolio', desc: 'All 22 projects, filterable', badge: 'Main drive', icon: LayoutGrid, C: PortfolioApp, size: [940, 640] },
-  { id: 'cases', title: 'Case Files', desc: 'Five flagship deep dives', badge: 'Start here', icon: FolderOpen, C: CasesApp, size: [980, 650] },
-  { id: 'films', title: 'Film Vault', desc: 'Watch the films, no autoplay', icon: Clapperboard, C: FilmsApp, size: [900, 620] },
+  { id: 'cases', title: 'Case Files', short: 'Cases', desc: 'Five flagship deep dives', badge: 'Start here', icon: FolderOpen, C: CasesApp, size: [980, 650] },
+  { id: 'films', title: 'Film Vault', short: 'Films', desc: 'Watch the films, no autoplay', icon: Clapperboard, C: FilmsApp, size: [900, 620] },
   { id: 'about', title: 'About.txt', desc: 'Who I am and how I think', icon: FileText, C: AboutApp, size: [820, 580] },
   { id: 'journey', title: 'Journey', desc: 'Kolkata 2004 to today', icon: Route, C: JourneyApp, size: [680, 620] },
   { id: 'craft', title: 'Craft', desc: 'My five-step method', icon: Sparkles, C: CraftApp, size: [740, 640] },
   { id: 'resume', title: 'Résumé', desc: 'Preview or download PDF', icon: ScrollText, C: ResumeApp, size: [780, 660] },
   { id: 'contact', title: 'Contact', desc: 'Email, LinkedIn, brief', badge: 'Hire me', icon: Mail, C: ContactApp, size: [660, 620] },
 ]
-const THEMES = [['dusk', 'Dusk', Moon], ['darkroom', 'Darkroom', Contrast]]
+const THEMES = [['aurum', 'Aurum', Contrast], ['aqua', 'Aqua', Moon]]
 const QUOTES = [
   'Concepts before polish.', 'Let the shake be the style.', 'A made thing speaks louder than an application.',
   'Aim the work at the right problem first.', 'Warm tones, honest frames.', 'Test your own assumption before anyone else does.',
@@ -26,6 +26,7 @@ const QUOTES = [
 ]
 const LAYOUT = 'aritraos-layout-v1'
 const FEATURED = ['portfolio', 'cases', 'contact']
+const TABS = ['portfolio', 'cases', 'films']
 
 
 function Alpona() {
@@ -163,8 +164,8 @@ function Palette({ items, close }) {
 
 export default function App() {
   const [booted, setBooted] = useState(false)
-  const [rawTheme, setTheme] = useLS('aritraos-theme-v1', 'dusk')
-  const theme = THEMES.some((t) => t[0] === rawTheme) ? rawTheme : rawTheme === 'dark' ? 'darkroom' : 'dusk'
+  const [rawTheme, setTheme] = useLS('aritraos-theme-v1', 'aurum')
+  const theme = THEMES.some((t) => t[0] === rawTheme) ? rawTheme : { dusk: 'aqua', night: 'aqua' }[rawTheme] || 'aurum'
   const [wins, setWins] = useState([])
   const [z, setZ] = useState(1000)
   const [pal, setPal] = useState(false)
@@ -172,6 +173,9 @@ export default function App() {
   const [evt, setEvt] = useState({ n: 0, type: '' })
   const [more, setMore] = useState(false)
   const wide = useMedia('(min-width: 1181px)')
+  const phone = useMedia('(max-width: 767px)')
+  const [sheet, setSheet] = useState(false)
+  useEffect(() => { if (!phone) setSheet(false) }, [phone])
   const clock = useClock()
   const quote = QUOTES[Math.floor(Date.now() / 864e5) % QUOTES.length]
   useEffect(() => writeLS(LAYOUT, lay), [lay])
@@ -188,6 +192,7 @@ export default function App() {
       const vw = window.innerWidth, vh = window.innerHeight
       return [...ws, { id, z: nz, x: clamp((vw - app.size[0]) / 2 + k * 30 - 30, 8, vw - 120), y: clamp(62 + k * 26, 52, vh - 260), payload }]
     })
+    setSheet(false)
     ping('open')
   }, [])
   const focus = (id) => setWins((ws) => { const top = Math.max(...ws.map((w) => w.z)); const w = ws.find((x) => x.id === id); return w.z === top ? ws : ws.map((x) => (x.id === id ? { ...x, z: top + 1 } : x)) })
@@ -212,11 +217,12 @@ export default function App() {
   useEffect(() => {
     const k = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); setPal((p) => !p) }
+      else if (e.key === 'Escape' && sheet) setSheet(false)
       else if (e.key === 'Escape' && !pal) setWins((ws) => { const vis = ws.filter((w) => !w.min); if (!vis.length) return ws; const top = vis.reduce((a, b) => (a.z > b.z ? a : b)); ping('close'); return ws.filter((w) => w.id !== top.id) })
     }
     window.addEventListener('keydown', k)
     return () => window.removeEventListener('keydown', k)
-  }, [pal])
+  }, [pal, sheet])
 
   const txOff = lay.tx || { x: 0, y: 0 }
   const txDrag = useDrag({
@@ -297,6 +303,28 @@ export default function App() {
       <div className="frieze" aria-hidden />
       <Companion evt={evt} />
 
+      {phone ? (
+        <>
+          {sheet && (
+            <>
+              <div className="sheet-back" onClick={() => setSheet(false)} />
+              <div className="sheet" role="dialog" aria-label="More apps">
+                {APPS.filter((x) => !TABS.includes(x.id)).map((x) => (
+                  <button key={x.id} onClick={() => open(x.id)}><span className="glyph"><x.icon size={24} aria-hidden /></span>{x.title}</button>
+                ))}
+                <button onClick={() => { setSheet(false); setPal(true) }}><span className="glyph"><Search size={24} aria-hidden /></span>Search</button>
+                <button onClick={cycleTheme}><span className="glyph"><Contrast size={24} aria-hidden /></span>Theme: {THEMES.find((t) => t[0] === theme)[1]}</button>
+              </div>
+            </>
+          )}
+          <nav className="tabbar" aria-label="Main">
+            {TABS.map((id) => { const x = APPS.find((p) => p.id === id); return (
+              <button key={id} className={wins.some((w) => w.id === id && !w.min) ? 'on' : ''} onClick={() => open(id)}><x.icon size={22} aria-hidden />{x.short || x.title}</button>
+            ) })}
+            <button className={sheet ? 'on' : ''} aria-expanded={sheet} onClick={() => setSheet((s) => !s)}><LayoutGrid size={22} aria-hidden />More</button>
+          </nav>
+        </>
+      ) : (
       <nav className="dock" aria-label="Dock">
         {APPS.map((a) => (
           <button key={a.id} className={wins.some((w) => w.id === a.id) ? 'on' : ''} onClick={() => open(a.id)} aria-label={a.title}>
@@ -307,6 +335,7 @@ export default function App() {
         <button onClick={() => setPal(true)} aria-label="Search"><Search size={24} aria-hidden /><span className="tip">Search</span></button>
         <button onClick={cycleTheme} aria-label="Change theme"><Contrast size={24} aria-hidden /><span className="tip">Theme</span></button>
       </nav>
+      )}
 
       {pal && <Palette items={items} close={() => setPal(false)} />}
       {!booted && <Boot done={() => setBooted(true)} />}
