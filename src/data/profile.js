@@ -156,8 +156,7 @@ export const ownerProfile = {
       role: "Shot and edited the film. Teammates appeared on screen, conducted interviews, set up shots, handled art direction and background research.",
       howItCameTogether: [
         "Interviewed both strangers and ourselves to capture both objective social commentary and intimate insider vulnerability.",
-        "Faced with a camera lacking optical stabilization and no gimbal, we innovated camera techniques so organic shake felt deliberate, human, and cinematically raw.",
-        "Paced the edit to reflect digital scrolling contrasted with real conversational silence."
+        "Paced the edit as a dual storyline to effectively corroborate the fictional storyline to real-world anecdotes from our interviews."
       ],
       outcome: "One of my favourite pieces so far; earned our group an outstanding grade and great peer reception.",
       reflection: "Dating can appear superficial on screens, but people differ widely in how stereotypes are perceived, performed, and felt.",
@@ -177,10 +176,11 @@ export const ownerProfile = {
       howItCameTogether: [
         "Communicated shot composition and aesthetic vision deeply with the cinematographer (Vaibhavi Chaturvedi) so I could perform without obsessing over the monitor.",
         "Collaborated on music production with Swapnendu Mukherjee and contributed vocals.",
+        "Faced with a camera lacking optical stabilization and no gimbal, we innovated camera techniques so organic shake felt deliberate, human, and cinematically raw.",
         "Credits: Directed by Aritra Banerjee; DOP Vaibhavi Chaturvedi; AD & Editor Aditya Deo Prasad; Screenplay Vaibhavi Chaturvedi; Music Producer Swapnendu Mukherjee; Vocals Swapnendu Mukherjee, Aritra Banerjee, Evan Joshua Joseph; Line Producer Ansh Banerjee."
       ],
       outcome: "Great feedback from faculty, heavily contributed to our semester grade, and proved full multidisciplinary execution.",
-      reflection: "Constraints pushed creative problem solving; for future productions I aim to allow more schedule runway and expand camera rigging.",
+      reflection: "Constraints pushed creative problem solving, and some risks are better taken than regretted; for future productions I aim to allow more schedule runway and expand camera rigging.",
       cover: "/assets/02-projects/mirage/cover.webp",
       links: [
         { label: "▶ Watch on YouTube", url: "https://youtu.be/CX_G0lGilr8" }
