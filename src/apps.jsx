@@ -3,6 +3,7 @@ import { Play, Download, Mail, Linkedin, Copy, ExternalLink } from 'lucide-react
 import { ownerProfile as P } from './data/profile.js'
 import projects from './data/projects.json'
 import { ytId } from './lib.js'
+import { track, openConsent } from './analytics.js'
 
 const FLAGS = P.flagships
 const FLAG_IDS = FLAGS.map((f) => f.id)
@@ -30,6 +31,7 @@ export function PortfolioApp({ payload, open }) {
   const groups = ['All', ...Array.from(new Set(ordered.map(group)))]
   const list = ordered.filter((p) => f === 'All' || group(p) === f)
   const p = ordered.find((x) => x.id === sel)
+  useEffect(() => { if (p) track('project_view', { project_id: p.id, project_name: p.title }) }, [sel])
   if (p) {
     const isFlag = FLAG_IDS.includes(p.id)
     return (
@@ -76,6 +78,7 @@ export function CasesApp({ payload }) {
   const [id, setId] = useState(payload?.id || FLAGS[0].id)
   useEffect(() => { if (payload?.id) setId(payload.id) }, [payload])
   const c = FLAGS.find((x) => x.id === id) || FLAGS[0]
+  useEffect(() => { track('case_file_view', { case_id: c.id, case_name: c.title }) }, [c.id])
   return (
     <div className="split">
       <div className="list" role="list">
@@ -124,7 +127,7 @@ function Film({ f }) {
         {on ? <iframe title={f.t} src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen /> : (
           <>
             <img loading="lazy" src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" onError={(e) => { e.currentTarget.src = f.c }} />
-            <button onClick={() => setOn(true)} aria-label={`Play ${f.t}`}><i><Play size={26} fill="currentColor" /></i></button>
+            <button onClick={() => { setOn(true); track('film_play', { film_title: f.t }) }} aria-label={`Play ${f.t}`}><i><Play size={26} fill="currentColor" /></i></button>
           </>
         )}
       </div>
@@ -218,7 +221,7 @@ export function ContactApp() {
   const [copied, setCopied] = useState(false)
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value })
   const href = `mailto:${P.contact.email}?subject=${encodeURIComponent(`Hello from ${f.name || 'your portfolio'}`)}&body=${encodeURIComponent(`Hi Aritra,\n\n${f.msg}\n\n${f.name}${f.org ? ', ' + f.org : ''}`)}`
-  const copy = async () => { try { await navigator.clipboard.writeText(P.contact.email); setCopied(true); setTimeout(() => setCopied(false), 1800) } catch { /* ignore */ } }
+  const copy = async () => { try { await navigator.clipboard.writeText(P.contact.email); track('email_click', { method: 'copy' }); setCopied(true); setTimeout(() => setCopied(false), 1800) } catch { /* ignore */ } }
   return (
     <div>
       <h3>Let's talk</h3>
@@ -234,6 +237,7 @@ export function ContactApp() {
         <label>Message<textarea value={f.msg} onChange={set('msg')} /></label>
         <a className="btn pri" href={href}>Open in my email app</a>
       </div>
+      <p className="note full">This site counts visits with Google Analytics, only if you accept. <button className="inline" onClick={openConsent}>Change your choice</button></p>
     </div>
   )
 }

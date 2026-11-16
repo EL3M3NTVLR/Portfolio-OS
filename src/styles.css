@@ -262,3 +262,15 @@ kbd{font:600 12px var(--f-ui);border:1px solid var(--line);border-radius:4px;pad
 .bar .mark img,.mark-dot,.boot img{object-position:50% 10%}
 .apps .tile:not(.wide) em{display:none}
 .wb p.note.full{max-width:none;width:100%}
+
+/* analytics consent card */
+.consent{position:fixed;z-index:5200;top:calc(var(--bar-h) + 14px);right:18px;width:min(360px,calc(100vw - 24px));padding:16px 18px;background:var(--win);color:var(--ink);border:2px solid var(--ink);border-radius:var(--r);box-shadow:8px 8px 0 rgba(0,0,0,.3);animation:rise .35s ease-out both}
+.consent h2{font:var(--w-display) 20px/1.2 var(--f-display);letter-spacing:var(--ls-display);margin-bottom:6px}
+.consent p{font-size:15px;line-height:1.5;color:var(--ink2)}
+.consent .fine{margin-top:8px;font-size:14px}
+.consent .more-link{margin:6px 0 2px;min-height:36px;font:600 14px var(--f-ui);color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.consent .row{margin-top:10px}
+.consent .btn.sec{background:transparent}
+.inline{font:inherit;font-weight:600;color:var(--accent);text-decoration:underline;text-underline-offset:3px;min-height:32px}
+@media (max-width:1180px){.consent{top:auto;right:12px;left:12px;bottom:100px;width:auto;max-width:560px}}
+@media (max-width:767px){.consent{bottom:82px;left:8px;right:8px}}

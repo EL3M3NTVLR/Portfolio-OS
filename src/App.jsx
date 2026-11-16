@@ -6,6 +6,7 @@ import {
   PortfolioApp, CasesApp, FilmsApp, AboutApp, JourneyApp, CraftApp, ResumeApp, ContactApp, PROJECTS, FLAGSHIPS,
 } from './apps.jsx'
 import Companion from './Companion.jsx'
+import { getConsent, setConsent, initAnalytics, track, watchLinks, openConsent } from './analytics.js'
 
 const APPS = [
   { id: 'portfolio', title: 'Portfolio', desc: 'All 22 projects, filterable', badge: 'Main drive', icon: LayoutGrid, C: PortfolioApp, size: [940, 640] },
@@ -60,6 +61,24 @@ function ArchRing() {
       <path d="M1,137 V50 A49,49 0 0 1 99,50 V137" strokeWidth="1.6" />
       <path d="M4,137 V50 A46,46 0 0 1 96,50 V137" strokeWidth="3" strokeDasharray="0.1 7" strokeLinecap="round" />
     </svg>
+  )
+}
+
+function Consent({ show, close }) {
+  const [more, setMore] = useState(false)
+  if (!show) return null
+  const choose = (v) => { setConsent(v); close() }
+  return (
+    <aside className="consent" role="dialog" aria-label="Analytics choice">
+      <h2>Mind if I count visitors?</h2>
+      <p>I use Google Analytics to see which projects get opened. It stays off until you accept, and it never learns your name or email.</p>
+      <button className="more-link" onClick={() => setMore((m) => !m)} aria-expanded={more}>{more ? 'Hide details' : 'What gets counted?'}</button>
+      {more && <p className="fine">Apps and projects opened, links clicked, your device type and browser, and an approximate city. Advertising features are switched off. You can change your mind any time from Contact or the search menu.</p>}
+      <div className="row">
+        <button className="btn sm pri" onClick={() => choose('granted')}>Accept</button>
+        <button className="btn sm sec" onClick={() => choose('denied')}>Decline</button>
+      </div>
+    </aside>
   )
 }
 
@@ -142,7 +161,7 @@ function Tile({ app, isOpen, open, off, setOff, canMove, wide }) {
 function Palette({ items, close }) {
   const [q, setQ] = useState(''), [i, setI] = useState(0)
   const res = useMemo(() => items.map((it) => ({ it, s: fuzzy(q, `${it.label} ${it.type}`) })).filter((r) => r.s).sort((a, b) => b.s - a.s).slice(0, 40).map((r) => r.it), [q, items])
-  const run = (it) => { close(); it.run() }
+  const run = (it) => { if (q.trim()) track('search_used', { search_term: q.trim().slice(0, 50), result_type: it.type }); close(); it.run() }
   return (
     <div className="pal-back" onMouseDown={(e) => e.target === e.currentTarget && close()}>
       <div className="pal" role="dialog" aria-label="Search">
@@ -175,10 +194,20 @@ export default function App() {
   const wide = useMedia('(min-width: 1181px)')
   const phone = useMedia('(max-width: 767px)')
   const [sheet, setSheet] = useState(false)
+  const [ask, setAsk] = useState(false)
   useEffect(() => { if (!phone) setSheet(false) }, [phone])
   const clock = useClock()
   const quote = QUOTES[Math.floor(Date.now() / 864e5) % QUOTES.length]
   useEffect(() => writeLS(LAYOUT, lay), [lay])
+  useEffect(() => { initAnalytics(); return watchLinks() }, [])
+  useEffect(() => {
+    if (!booted || getConsent()) return
+    const t = setTimeout(() => setAsk(true), 1400)
+    return () => clearTimeout(t)
+  }, [booted])
+  useEffect(() => { const f = () => setAsk(true); window.addEventListener('aritraos:consent-open', f); return () => window.removeEventListener('aritraos:consent-open', f) }, [])
+  const firstTheme = useRef(true)
+  useEffect(() => { if (firstTheme.current) { firstTheme.current = false; return } track('theme_change', { theme }) }, [theme])
   const ping = (type) => setEvt((e) => ({ n: e.n + 1, type }))
 
   const open = useCallback((id, payload) => {
@@ -193,6 +222,7 @@ export default function App() {
       return [...ws, { id, z: nz, x: clamp((vw - app.size[0]) / 2 + k * 30 - 30, 8, vw - 120), y: clamp(62 + k * 26, 52, vh - 260), payload }]
     })
     setSheet(false)
+    track('app_open', { app_name: id })
     ping('open')
   }, [])
   const focus = (id) => setWins((ws) => { const top = Math.max(...ws.map((w) => w.z)); const w = ws.find((x) => x.id === id); return w.z === top ? ws : ws.map((x) => (x.id === id ? { ...x, z: top + 1 } : x)) })
@@ -209,6 +239,7 @@ export default function App() {
     ...FLAGSHIPS.map((f) => ({ label: f.title, type: 'Case file', run: () => open('cases', { id: f.id }) })),
     ...PROJECTS.map((p) => ({ label: p.title, type: 'Project', run: () => open('portfolio', { id: p.id }) })),
     ...THEMES.map(([id, n]) => ({ label: `Switch to ${n} theme`, type: 'Command', run: () => setTheme(id) })),
+    { label: 'Analytics choice (cookies)', type: 'Command', run: openConsent },
     { label: 'Email Aritra', type: 'Command', run: () => { location.href = `mailto:${P.contact.email}` } },
     { label: 'Download résumé', type: 'Command', run: () => window.open(P.identity.resumePdf, '_blank', 'noopener') },
     { label: 'Reset desktop icon positions', type: 'Command', run: resetLayout },
@@ -337,6 +368,7 @@ export default function App() {
       </nav>
       )}
 
+      <Consent show={ask} close={() => setAsk(false)} />
       {pal && <Palette items={items} close={() => setPal(false)} />}
       {!booted && <Boot done={() => setBooted(true)} />}
     </div>
