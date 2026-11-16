@@ -18,5 +18,8 @@ npm run build      # builds to dist/ and runs the audit
 ## Deploy (Vercel)
 Import the repo in Vercel, framework Vite, build `npm run build`, output `dist`. Point `aritrabjee.vercel.app` at it.
 
+## Analytics
+Google Analytics 4 (`src/analytics.js`) loads only after the visitor accepts the banner. ID comes from `VITE_GA_MEASUREMENT_ID` in Vercel, with the public ID as a fallback. Events: app_open, project_view, case_file_view, film_play, outbound_click, email_click, resume_download, theme_change, search_used. Vercel Analytics (cookieless) stays on.
+
 ## Storage
-Only in the visitor's browser: theme, icon positions and companion position. Nothing is sent anywhere. Contact uses `mailto:`.
+Only in the visitor's browser: theme, icon positions and companion position. Nothing is sent anywhere except analytics events after consent. Contact uses `mailto:`.
